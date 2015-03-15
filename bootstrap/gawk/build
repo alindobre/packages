@@ -1,0 +1,4 @@
+name gawk
+version 4.1.1
+mode bootstrap
+sources http://ftp.gnu.org/gnu/gawk/gawk-$VERSION.tar.xz

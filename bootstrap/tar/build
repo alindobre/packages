@@ -1,0 +1,5 @@
+name tar
+version 1.28
+mode autotools
+sources http://ftp.gnu.org/gnu/tar/tar-${VERSION}.tar.xz
+config-extra FORCE_UNSAFE_CONFIGURE=1

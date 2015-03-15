@@ -1,0 +1,43 @@
+name gcc
+version 4.9.1
+mode bootstrap
+sources http://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.bz2
+
+pre-config() {
+  pushd $SRC
+  unpack -p 1 -C mpc http://www.multiprecision.org/mpc/download/mpc-1.0.2.tar.gz
+  unpack -p 1 -C mpfr http://www.mpfr.org/mpfr-3.1.2/mpfr-3.1.2.tar.xz
+  unpack -p 1 -C gmp http://ftp.gnu.org/gnu//gmp/gmp-6.0.0a.tar.xz
+  for file in \
+   $(find gcc/config -name linux64.h -o -name linux.h -o -name sysv4.h)
+  do
+    cp -uv $file{,.orig}
+    sed -e "s@/lib\(64\)\?\(32\)\?/ld@$TOOLS&@g" \
+        -e "s@/usr@$TOOLS@g" $file.orig > $file
+    echo "
+#undef STANDARD_STARTFILE_PREFIX_1
+#undef STANDARD_STARTFILE_PREFIX_2
+#define STANDARD_STARTFILE_PREFIX_1 \"$TOOLS/lib/\"
+#define STANDARD_STARTFILE_PREFIX_2 \"\"" >> $file
+    touch $file.orig
+  done
+  sed -i '/k prot/agcc_cv_libc_provides_ssp=yes' gcc/configure
+  sed -i 's/if \((code.*))\)/if (\1 \&\& \!DEBUG_INSN_P (insn))/' gcc/sched-deps.c
+  popd
+}
+
+post-install() {
+  cat $SRC/gcc/{limitx,glimits,limity}.h > \
+    $DST$TOOLS/lib/gcc/$TARGET/$VERSION/include-fixed/limits.h
+#    `dirname $($TARGET-gcc -print-libgcc-file-name)`/include-fixed/limits.h
+}
+
+build-dir
+config-target
+config-with sysroot=$SYSROOT newlib local-prefix=$TOOLS \
+            native-system-header-dir=$TOOLS/include
+config-without headers
+config-enable languages=c,c++
+config-disable nls shared multilib decimal-float threads libatomic libgomp \
+               libitm libquadmath libsanitizer libssp libvtv libcilkrts \
+               libstdc++-v3

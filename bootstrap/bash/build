@@ -1,0 +1,10 @@
+name bash
+version 4.3
+mode bootstrap
+sources http://ftp.gnu.org/gnu/bash/bash-$VERSION.tar.gz
+
+config-without bash-malloc
+
+post-install() {
+  ln -f -s bash $DST$TOOLS/bin/sh
+}

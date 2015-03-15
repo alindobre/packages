@@ -1,0 +1,9 @@
+name bzip2
+version 1.0.6
+sources http://www.bzip.org/$VERSION/bzip2-$VERSION.tar.gz
+mode bootstrap
+
+build() {
+  make PREFIX=$TOOLS
+  make install PREFIX=$DST$TOOLS
+}

@@ -1,0 +1,8 @@
+name util-linux
+version 2.24.2
+mode bootstrap
+sources http://ftp.kernel.org/pub/linux/utils/util-linux/v${VERSION%.*}/util-linux-$VERSION.tar.xz
+
+config-without python systemdsystemunitdir
+config-disable makeinstall-chown
+config-extra PKG_CONFIG=""

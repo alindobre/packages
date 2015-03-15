@@ -1,0 +1,15 @@
+name glibc
+version 2.19
+sources http://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz
+mode bootstrap
+
+pre-config() {
+  config-extra --build=$($SRC/scripts/config.guess)
+}
+
+build-dir
+config-host
+config-extra libc_cv_forced_unwind=yes libc_cv_ctors_header=yes libc_cv_c_cleanup=yes
+config-disable profile
+config-enable kernel=2.6.32
+config-with headers=$TOOLS/include

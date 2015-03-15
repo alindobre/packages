@@ -1,0 +1,6 @@
+name make
+version 4.0
+mode bootstrap
+sources http://ftp.gnu.org/gnu/make/make-$VERSION.tar.bz2
+
+config-without guile

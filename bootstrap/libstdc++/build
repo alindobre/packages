@@ -1,0 +1,13 @@
+name libstdc++
+version 4.9.1
+mode bootstrap
+sources http://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.bz2
+
+pre-config() {
+  CONFIGURE=$SRC/libstdc++-v3/configure
+}
+
+build-dir
+config-host
+config-disable multilib shared nls libstdcxx-threads libstdcxx-pch
+config-with gxx-include-dir=/tools/$TARGET/include/c++/$VERSION

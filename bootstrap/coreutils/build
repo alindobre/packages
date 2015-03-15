@@ -1,0 +1,7 @@
+name coreutils
+version 8.22
+mode bootstrap
+sources http://ftp.gnu.org/gnu/coreutils/coreutils-$VERSION.tar.xz
+
+config-enable enable-install-program=hostname
+config-extra FORCE_UNSAFE_CONFIGURE=1

@@ -1,0 +1,20 @@
+name binutils
+version 2.24
+mode bootstrap
+sources http://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.bz2
+
+build-dir
+config-with sysroot lib-path=$TOOLS/lib
+config-disable nls werror
+
+pre-config() {
+  CC=$TARGET-gcc
+  AR=$TARGET-ar
+  RANLIB=$TARGET-ranlib
+}
+
+post-install() {
+  make -C ld clean
+  make -C ld LIB_PATH=/usr/lib:/lib
+  cp -v ld/ld-new $DST$TOOLS/bin
+}

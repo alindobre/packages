@@ -1,0 +1,14 @@
+name binutils
+version 2.24
+mode bootstrap
+sources http://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.bz2
+
+build-dir
+config-target
+config-with sysroot=$SYSROOT lib-path=/tools/lib
+config-disable nls werror
+
+post-install() {
+  mkdir $DST$TOOLS/lib
+  ln -s lib $DST$TOOLS/lib64
+}

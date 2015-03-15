@@ -1,0 +1,4 @@
+name grep
+version 2.18
+mode bootstrap
+sources http://ftp.gnu.org/gnu/grep/grep-$VERSION.tar.xz

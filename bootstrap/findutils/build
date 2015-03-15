@@ -1,0 +1,4 @@
+name findutils
+version 4.4.2
+mode bootstrap
+sources http://ftp.gnu.org/gnu/findutils/findutils-$VERSION.tar.gz
